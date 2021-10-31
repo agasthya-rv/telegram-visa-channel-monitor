@@ -26,8 +26,11 @@ async def forward_filtered_msg(event):
     msg_id = msg.id if msg else None
     msg_text = msg.message if msg else event.raw_text
     #print(datetime.now().strftime("%m/%d/%Y %H:%M:%S") + ":" + msg_text)
+    
+    # Forward all the messages that contain photo
     if msg_id and msg.photo:
         await client.forward_messages(constants.MY_CHANNEL_ID, msg)
+    # Forward all the messages that match the pattern string
     elif (msg_id and msg_text and msg_text[:1] != '/' and pattern_match(msg_text)):
         await client.forward_messages(constants.MY_CHANNEL_ID, msg)
 
